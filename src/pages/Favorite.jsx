@@ -53,7 +53,7 @@ const Favorite = () => {
       </div>
 
       <div className=" flex items-center justify-center gap-4  text-center pb-8 font-bold text-4xl text-gray-600">
-        <p>Your workout</p>
+        <p>Your workout plan</p>
         <img src={Dumbbell} alt='dumbbell' className=" w-10" />
       </div>
 
