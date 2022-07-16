@@ -9,6 +9,7 @@ const instance = axios.create({
 // если пользователь авторизован - он там лежит
 instance.interceptors.request.use((config) => {
     config.headers.Authorization = window.localStorage.getItem('token');
+    console.log(config);
     return config
 });
 
