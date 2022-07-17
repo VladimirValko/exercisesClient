@@ -21,7 +21,8 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logOut: (state) => {
-            state.data = null
+            state.data = null;
+            console.log('loged-out')
         }
     },
     extraReducers: {

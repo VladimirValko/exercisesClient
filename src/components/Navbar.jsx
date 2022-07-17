@@ -1,8 +1,23 @@
 import React from 'react';
 import Logo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectIsAuth, logOut } from '../redux/authSlice/auth';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isAuth = useSelector(selectIsAuth);
+  const isToken = Boolean(window.localStorage.getItem("token"))
+
+  const onClickLogout = () => {
+    if(window.confirm('Вы уверены что хотите выйти из аккаунта?')){
+      dispatch(logOut());
+      navigate("/login", { replace: true });
+      window.localStorage.removeItem('token')
+    }
+  };
+
   return (
     <div className=' w-full h-[80px] bg-white flex justify-between px-4 items-center shadow-sm mr-8'>
         <div className='flex justify-start align-middle text-center items-center'>
@@ -13,14 +28,18 @@ const Navbar = () => {
             <Link to='/'>
             <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>Home</li>
             </Link>
-            <Link to='/favorite'>
+            {isToken ? (<Link to='/favorite'>
             <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>My Programm</li>
-            </Link>
+            </Link>) : (<Link to='/login'>
+            <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>My Programm</li>
+            </Link>)}
             <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>Mobile App</li>
-            <Link to="/Login">
+            {!isToken ? (<Link to="/Login">
             <button className="btn btn-secondary">Log-In</button>
-            </Link>
-            <button className="btn btn-primary">Sing-In</button>
+            </Link>) : (<Link to="/Login">
+            <button className="btn btn-secondary" onClick={() => onClickLogout()}>Log-Out</button>
+            </Link>)}
+            {!isToken && <Link to="/registration"><button className="btn btn-primary">Sing-Up</button></Link>}
         </ul>
     </div>
   )

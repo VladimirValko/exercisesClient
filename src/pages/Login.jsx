@@ -26,14 +26,13 @@ const Login = () => {
     const data = await dispatch(fetchAuth(values));
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token)
+      navigate("/", { replace: true });
     } else {
       console.log('Не удалось авторизоваться');
     }
   }
 
-  if (isAuth){ 
-    navigate("/", { replace: true });;
-  }
+ 
 
 
 
@@ -41,7 +40,7 @@ const Login = () => {
     <div class="hero min-h-screen bg-base ">
       <div class="hero-content flex-col lg:flex-col">
         <div class="flex flex-col align-middle justify-center text-center lg:text-left max-w-[600px]">
-          <h1 class="text-5xl font-bold text-center">Login now!</h1>
+          <h1 class="text-5xl font-bold text-center">Log In</h1>
           <p class="py-6 text-center">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
