@@ -1,11 +1,12 @@
-import React from "react";
-import { top } from "../components/HorizontalScroll";
+import React, { useEffect, useState } from "react";
 import Women from "../assets/favwomen.jpg";
 import Stat from "../components/Stat";
 import Dumbbell from '../assets/dumbbell.png'
-import ExerciseCard from "../components/ExerciseCard";
+import FavoriteCard from '../components/FavoriteCard'
 import { selectIsAuth } from "../redux/authSlice/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from '../utils/axios';
+import { useSelector } from 'react-redux';
 
 
 // // for
@@ -32,6 +33,17 @@ import { useNavigate } from "react-router-dom";
 
 
 const Favorite = () => {
+  const [exercises, setExercises] = useState([]);
+  const data = useSelector(state => state.auth.data);
+  console.log(data);
+
+  useEffect(() => {
+    const getFavorite = async () => {
+      const favoriteExercises = await axios.get(`http://localhost:4444/favorite`, data._id);
+      setExercises(favoriteExercises.data);
+    }
+    getFavorite();
+  }, [])
 
   const navigate = useNavigate();
 
@@ -46,7 +58,7 @@ const Favorite = () => {
               className="w-[500px] h-[700px] rounded-2xl shadow-lg ml-8"
             />
             <div>
-              <h1 class="text-5xl font-extrabold text-gray-600">Create your own programm</h1>
+              <h1 class="text-6xl font-extrabold text-gray-600">Create your own programm</h1>
               <p className="py-6">
                 Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
                 excepturi exercitationem quasi. In deleniti eaque aut repudiandae
@@ -58,8 +70,8 @@ const Favorite = () => {
           </div>
         </div>
   
-        <div className=" flex items-center justify-center gap-4  text-center pb-8 font-bold text-4xl text-gray-600">
-          <p>Your workout plan</p>
+        <div className=" flex items-center justify-center gap-4  text-center pb-8 font-bold text-5xl text-gray-600">
+          <p>Workout plan</p>
           <img src={Dumbbell} alt='dumbbell' className=" w-10" />
         </div>
   
@@ -75,8 +87,8 @@ const Favorite = () => {
                   <th>Reps</th>
                 </tr>
               </thead>
-              {top.map((exercise, i) => (
-                <tbody>
+              {exercises.map((exercise, i) => (
+                <tbody key={i}>
                   <tr>
                     <th>{i + 1}</th>
                     <td>{exercise.name}</td>
@@ -91,8 +103,8 @@ const Favorite = () => {
         </div>
   
         <div className="flex gap-4 flex-wrap justify-center m-8">
-          {top.map((exercise, i) => (
-            <ExerciseCard exercise={exercise} key={i} />
+          {exercises.map((exercise, i) => (
+              <FavoriteCard exercise={exercise} key={i} />
           ))}
         </div>
       </div>

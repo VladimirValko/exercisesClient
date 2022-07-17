@@ -18,7 +18,7 @@ const Exercise = () => {
   useEffect(() => {
     const fetchExerciseData = async () => {
       const exercisesDetail = await axios.get(
-        `http://localhost:4444/exercises/exercise/${id}`
+        `http://localhost:4444/exercises/favorite/${id}`
       );
       setexerciseDetail(exercisesDetail.data);
       
