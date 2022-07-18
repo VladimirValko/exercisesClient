@@ -8,7 +8,7 @@ const Exercise = () => {
   const [goalSets, setGoalSets] = useState('');
   const [goalReps, setGoalReps] = useState('');
 
-  console.log(goalSets, goalReps);
+  console.log(exerciseDetailData);
 
   const addToFavorite = async () => {
     const { data } = await axios.post(
@@ -21,13 +21,19 @@ const Exercise = () => {
 
   useEffect(() => {
     const fetchExerciseData = async () => {
-      const exercisesDetail = await axios.get(
+      let exercisesDetail = await axios.get(
         `http://localhost:4444/exercises/exercise/${id}`
       );
-      setexerciseDetail(exercisesDetail.data);
       
+      if(exercisesDetail.data === null) {
+        exercisesDetail = await axios.get(
+          `http://localhost:4444/exercises/top/${id}`
+        );
+      }
+      console.log(exercisesDetail);
+      setexerciseDetail(exercisesDetail.data);
     };
-
+   
     fetchExerciseData();
   }, []);
 

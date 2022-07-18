@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Women from "../assets/favwomen.jpg";
 import Stat from "../components/Stat";
 import Dumbbell from '../assets/dumbbell.png'
-import FavoriteCard from '../components/FavoriteCard'
+import  ExerciseCard  from '../components/ExerciseCard'
 import { selectIsAuth } from "../redux/authSlice/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from '../utils/axios';
 import { useSelector } from 'react-redux';
 
@@ -60,7 +60,7 @@ const Favorite = () => {
             <div>
               <h1 className="text-6xl font-extrabold text-gray-600">Create your own programm</h1>
               <p className="py-6">
-                Прикрутить redux-persist  <br/>
+                Прикрутить пагинацию  <br/>
                 Нужно добавить новую БД - ТОП <br/>
                 под неё нужен новый запрос сбека и фронта<br/>
                 нужно удалить лишние упражнения из фаворитс оставить штук 7<br/>
@@ -78,7 +78,7 @@ const Favorite = () => {
   
         <div className=" flex items-center justify-center gap-4  text-center pb-8 font-bold text-5xl text-gray-600">
           <p>Workout plan</p>
-          <img src={Dumbbell} alt='dumbbell' className=" w-10" />
+          <img src={Dumbbell} alt='dumbbell' className=" w-16" />
         </div>
   
         <div className="w-5/6 mx-auto ">
@@ -110,7 +110,7 @@ const Favorite = () => {
   
         <div className="flex gap-4 flex-wrap justify-center m-8">
           {exercises.map((exercise, i) => (
-              <FavoriteCard exercise={exercise} key={i} />
+              <ExerciseCard exercise={exercise} key={i} link={`/exercises/favorite/${exercise._id}`}/>
           ))}
         </div>
       </div>

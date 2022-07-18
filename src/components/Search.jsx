@@ -7,6 +7,7 @@ const Search = () => {
   const [exercises, setExercises] = useState([]);
 
   console.log(exercises);
+  console.log(search);
 
   const handleSearch = async () => {
     if(search) {
@@ -41,7 +42,7 @@ const Search = () => {
         </div>
         <div className='flex flex-wrap gap-4 justify-center items-center'>
         {exercises && exercises.map((exercise, i) => (
-          <ExerciseCard exercise={exercise} key={i} />
+          <ExerciseCard exercise={exercise} key={i} link={`/exercises/exercise/${exercise._id}`}/>
         ))}
         </div>
     </div>

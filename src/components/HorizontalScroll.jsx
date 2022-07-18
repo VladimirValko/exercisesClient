@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import FavoriteCard from '../components/FavoriteCard'
+import  ExerciseCard  from '../components/ExerciseCard'
 import axios from '../utils/axios'
 
 
 
 const HorizontalScroll = () => {
   const [exercises, setExercises] = useState([]);
+  console.log(exercises);
 
   useEffect(() => {
     const getFavorite = async () => {
-      const favoriteExercises = await axios.get(`http://localhost:4444/favorite`);
-      setExercises(favoriteExercises.data);
+      const TopExercises = await axios.get(`http://localhost:4444/`);
+      setExercises(TopExercises.data);
     }
     getFavorite();
   }, [])
@@ -18,10 +19,11 @@ const HorizontalScroll = () => {
   return (
     <div className="carousel rounded-box w-screen">
         {exercises?.map((item, i) => (<div className="carousel-item">
-                    <FavoriteCard
-                     exercise={item} 
-                     key={i}
-                     className='m-10'
+                    <ExerciseCard
+                      link={`/exercises/exercise/${item._id}`}
+                      exercise={item} 
+                      key={i}
+                      className='m-10'
                     />
             </div>)
             

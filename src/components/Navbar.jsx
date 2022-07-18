@@ -39,7 +39,7 @@ const Navbar = () => {
             </Link>) : (<Link to="/Login">
             <button className="btn btn-secondary" onClick={() => onClickLogout()}>Log-Out</button>
             </Link>)}
-            {!isToken && <Link to="/registration"><button className="btn btn-primary">Sing-Up</button></Link>}
+            {!isToken && <Link to="/registration"><button className="btn btn-primary">Sign-Up</button></Link>}
         </ul>
     </div>
   )
