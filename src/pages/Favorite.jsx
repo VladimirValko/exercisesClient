@@ -58,7 +58,7 @@ const Favorite = () => {
               className="w-[500px] h-[700px] rounded-2xl shadow-lg ml-8"
             />
             <div>
-              <h1 class="text-6xl font-extrabold text-gray-600">Create your own programm</h1>
+              <h1 className="text-6xl font-extrabold text-gray-600">Create your own programm</h1>
               <p className="py-6">
                 Прикрутить redux-persist  <br/>
                 Нужно добавить новую БД - ТОП <br/>
