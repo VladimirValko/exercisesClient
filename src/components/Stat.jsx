@@ -1,6 +1,4 @@
 import React from 'react';
-import { top } from './HorizontalScroll';
-
 
 
 const Stat = (data) => {
@@ -13,7 +11,7 @@ const Stat = (data) => {
             </div>
             <div class="stat-title">Exercises Added</div>
             <div class="stat-value text-primary">6</div>
-            <div class="stat-desc">Recomended min 10</div>
+            <div class="stat-desc">Recomended min 7</div>
         </div>
   
         <div class="stat">

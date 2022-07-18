@@ -60,9 +60,15 @@ const Favorite = () => {
             <div>
               <h1 class="text-6xl font-extrabold text-gray-600">Create your own programm</h1>
               <p className="py-6">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-                excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-                et a id nisi.
+                Прикрутить redux-persist  <br/>
+                Нужно добавить новую БД - ТОП <br/>
+                под неё нужен новый запрос сбека и фронта<br/>
+                нужно удалить лишние упражнения из фаворитс оставить штук 7<br/>
+                прикрутить динамическое отображение данных в фаворит имя и общие повторения<br/>
+                Добавить страницу со статистикой тренировок <br/>
+                создать скелетоны под упражнения для главной страницы<br/>
+                создать анимацию загрузки для раздела фаворитс <br/>
+
               </p>
               {/* <button class="btn btn-primary">Get Started</button> */}
               <Stat />

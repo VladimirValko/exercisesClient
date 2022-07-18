@@ -22,7 +22,7 @@ const Navbar = () => {
     <div className=' w-full h-[80px] bg-white flex justify-between px-4 items-center shadow-sm mr-8'>
         <div className='flex justify-start align-middle text-center items-center'>
             <img src={Logo} alt='logo' className=' ml-4 w-16'/>
-            <p className=' font-black text-3xl mx-2 text-[#e11d48]'>PRO-GYM</p>
+            <p className=' font-black text-3xl mx-2 text-[#e11d48]'>PRO-FITNESS</p>
         </div> 
         <ul className='flex gap-12 text-xl font-bold capitalize  align-middle text-center items-center text-gray-500 mr-6'>
             <Link to='/'>
