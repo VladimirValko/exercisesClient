@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import Women from "../assets/favwomen.jpg";
 import Stat from "../components/Stat";
 import Dumbbell from "../assets/dumbbell.png";
-import ExerciseCard from "../components/ExerciseCard";
 import { selectIsAuth } from "../redux/authSlice/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "../utils/axios";
 import { useSelector } from "react-redux";
 import WorkoutPlan from "../components/WorkoutPlan";
-import Heart from "../assets/heart.png"
+
 // // for
 // let sumFromFor = 0;
 // for (let i = 0; i < top.length; i++) {
@@ -32,9 +31,14 @@ import Heart from "../assets/heart.png"
 
 const Favorite = () => {
   const [exercises, setExercises] = useState([]);
+  const [workout, setWorkout] = useState([]);
   const [newProgramm, setNewProgram] = useState(false)
   const data = useSelector((state) => state.auth.data);
-  console.log(newProgramm);
+  console.log(workout);
+  console.log(exercises);
+
+
+  
 
   useEffect(() => {
     const getFavorite = async () => {
@@ -42,10 +46,25 @@ const Favorite = () => {
         `http://localhost:4444/favorite`,
         data._id
       );
+
+      if(favoriteExercises.length === 0){
+        setNewProgram(false);
+      }
       setExercises(favoriteExercises.data);
     };
+
     getFavorite();
   }, []);
+
+  useEffect(() => {
+    const getWorkoutPlan = async () => {
+      const workout = await axios.get("http://localhost:4444/workouts", data._id);
+      console.log(workout.data, 'это то шо пришло в виде воркаут');
+      setWorkout(workout.data);
+    }
+
+    getWorkoutPlan();
+  }, [exercises])
 
   const navigate = useNavigate();
 
@@ -65,6 +84,8 @@ const Favorite = () => {
               </h1>
               <p className="py-6">
                 Прикрутить пагинацию <br />
+                Динамическое отображение плана тренировки после добавления нового упражнения <br />
+                Длбавить таргет масл в сетворкаут <br />
                 добавить страницу с избранными упражнениями и возможностью их удалять<br />
                 Добавить к карточке упражнений кнопку ADD <br />
                 нужно удалить лишние упражнения из фаворитс оставить штук 7
@@ -100,17 +121,17 @@ const Favorite = () => {
                   <th>Reps</th>
                 </tr>
               </thead>
-              {exercises.map((exercise, i) => (
+              {workout.length ? workout[0].completedWorkout.filter(item => item.exerciseName.length > 0).map((exercise, i) => (
                 <tbody key={i}>
                   <tr>
                     <th>{i + 1}</th>
-                    <td>{exercise.name}</td>
+                    <td>{exercise.exerciseName}</td>
                     <td>{exercise.target}</td>
                     <td>{exercise.goalSets}</td>
-                    <td>{exercise.goalRep}</td>
+                    <td>{exercise.goalReps}</td>
                   </tr>
                 </tbody>
-              ))}
+              )) : null }
             </table>
           </div>
         </div>

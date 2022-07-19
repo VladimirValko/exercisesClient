@@ -5,14 +5,16 @@ import { useSelector } from "react-redux";
 
 const WorkoutPlan = ({ exercises }) => {
   const [workout, setWorkout] = useState([]);
-  const [exerciseName, setExerciseName] = useState("")
-  const [goalSets, setGoalSets] = useState(1)
-  const [goalReps, setGoalReps] = useState(8)
-  const [weight, setWeight] = useState(0)
+  const [exerciseName, setExerciseName] = useState("");
+  const [goalSets, setGoalSets] = useState(1);
+  const [goalReps, setGoalReps] = useState(8);
+  const [weight, setWeight] = useState(0);
+  const [target, setTarget] = useState('');
   const [exerciseImage, setExerciseImage] = useState("");
   const user = useSelector((state) => state.auth.data._id);
 
   console.log(workout.length, 'workout');
+  console.log(goalSets, goalReps, exerciseName, weight, target, user);
   
   const getWorkoutPlan = async () => {
     const workout = await axios.get("http://localhost:4444/workouts", {user});
@@ -26,15 +28,19 @@ const WorkoutPlan = ({ exercises }) => {
    
 
   const onExerciseNameChange = (e) => {
+
+    const currentExercise = exercises.filter(item => item.name === e.target.value)
     setExerciseName(e.target.value);
-    changeImg(e.target.value)
+    changeImg(e.target.value);
+    console.log(currentExercise);
+    setTarget(currentExercise[0].target);
   }
 
 
   const addWorkout = async () => {
     const { data } = await axios.post(
       "http://localhost:4444/workouts",
-      {goalSets, goalReps, exerciseName, weight, user }
+      {goalSets, goalReps, exerciseName, weight, target, user }
     );
     setWorkout(data);
     console.log(workout);
@@ -44,21 +50,25 @@ const WorkoutPlan = ({ exercises }) => {
   const updateWorkout = async () => {
     const { data } = await axios.patch(
       "http://localhost:4444/workouts",
-      {goalSets, goalReps, exerciseName, weight, user }
+      {goalSets, goalReps, exerciseName, weight, user, target }
     );
     console.log(data, "отпатчилось");
   }
 
   const changeImg = (value) => {
-    const exercise = exercises.filter((item) => item.name === value);
-    const img = exercise[0].gifUrl;
+    const exercise = exercises?.filter((item) => item.name === value);
+    const img = exercise?.[0].gifUrl;
     setExerciseImage(img);
   };
 
   useEffect(() => {
-    changeImg(exercises[0].name);
-    setExerciseName(exercises[0].name);
-    getWorkoutPlan();
+    if(exercises.length > 0){
+      changeImg(exercises[0].name);
+      setExerciseName(exercises[0].name);
+      getWorkoutPlan();
+      setTarget(exercises[0].target);
+    }
+    
   }, []);
 
   return (
@@ -78,8 +88,8 @@ const WorkoutPlan = ({ exercises }) => {
                 class="select select-bordered capitalize"
                 onChange={(e) => onExerciseNameChange(e)}
               >
-                <option disabled>Pick one</option>
-                {exercises.map((exercise, i) => (
+                <option disabled>Choose from your favorite exercises</option>
+                {exercises?.map((exercise, i) => (
                   <option key={i}>{exercise.name}</option>
                 ))}
               </select>
@@ -106,6 +116,7 @@ const WorkoutPlan = ({ exercises }) => {
               </label>
               <select class="select select-bordered"
               onChange={(e) => setGoalReps(e.target.value)}
+              required
               >
                 <option disabled>Pick one</option>
                 <option>8</option>
