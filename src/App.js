@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from './components/Navbar';
 import Favorite from './pages/Favorite';
 import Exercise from './pages/Exercise';
-import FavoritePage from './pages/FavoritePage'
+import FavoritePage from './pages/FavoritePage';
 import Login from './pages/Login';
 import { Registration }  from './pages/Registration';
 
