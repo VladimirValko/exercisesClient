@@ -4,6 +4,7 @@ import axios from "../utils/axios";
 import { useSelector } from "react-redux";
 
 const WorkoutPlan = ({ exercises }) => {
+  const [workout, setWorkout] = useState([]);
   const [exerciseName, setExerciseName] = useState("")
   const [goalSets, setGoalSets] = useState(1)
   const [goalReps, setGoalReps] = useState(8)
@@ -11,9 +12,18 @@ const WorkoutPlan = ({ exercises }) => {
   const [exerciseImage, setExerciseImage] = useState("");
   const user = useSelector((state) => state.auth.data._id);
 
-  console.log(user);
-  console.log(exerciseName, goalSets, goalReps, weight);
-
+  console.log(workout.length, 'workout');
+  
+  const getWorkoutPlan = async () => {
+    const workout = await axios.get("http://localhost:4444/workouts", {user});
+    console.log(workout.data, 'это то шо пришло в виде воркаут');
+    setWorkout(workout.data);
+    if(workout.data.length === 0){
+      addWorkout()
+      console.log('было пусто добавил воркаут');
+    }
+  }
+   
 
   const onExerciseNameChange = (e) => {
     setExerciseName(e.target.value);
@@ -26,7 +36,9 @@ const WorkoutPlan = ({ exercises }) => {
       "http://localhost:4444/workouts",
       {goalSets, goalReps, exerciseName, weight, user }
     );
-    console.log(data);
+    setWorkout(data);
+    console.log(workout);
+    console.log('было пусто добавил тренировку');
   };
 
   const updateWorkout = async () => {
@@ -46,7 +58,7 @@ const WorkoutPlan = ({ exercises }) => {
   useEffect(() => {
     changeImg(exercises[0].name);
     setExerciseName(exercises[0].name);
-    addWorkout();
+    getWorkoutPlan();
   }, []);
 
   return (
