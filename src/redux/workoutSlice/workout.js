@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from '../../utils/axios'
 
 export const fetchWorkout = createAsyncThunk('workout/fetchWorkout', async (params) => {
-    const workout = await axios.get("http://localhost:4444/workouts", params);
-    return workout.data;
+    const { data } = await axios.get("http://localhost:4444/workouts", params);
+    return data;
 });
 
 export const addWorkout = createAsyncThunk('workout/addWorkout', async (params) => {

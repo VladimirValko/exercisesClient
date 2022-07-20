@@ -4,10 +4,11 @@ import Stat from "../components/Stat";
 import Dumbbell from "../assets/dumbbell.png";
 import { selectIsAuth } from "../redux/authSlice/auth";
 import { useNavigate } from "react-router-dom";
-import axios from "../utils/axios";
+import { fetchFavorite } from "../redux/favoriteSlice/favorite";
 import { useSelector, useDispatch } from "react-redux";
 import WorkoutPlan from "../components/WorkoutPlan";
 import { fetchWorkout } from "../redux/workoutSlice/workout";
+import { setFavorite } from "../redux/favoriteSlice/favorite";
 
 // // for
 // let sumFromFor = 0;
@@ -31,13 +32,13 @@ import { fetchWorkout } from "../redux/workoutSlice/workout";
 // console.log("sumFromReduce", sumFromReduce);
 
 const Favorite = () => {
-  const [exercises, setExercises] = useState([]);
   const [workout, setWorkout] = useState([]);
   const [openCreateWorkout, setOpenCreateWorkout] = useState(false);
   const data = useSelector((state) => state.auth.data);
   const user = useSelector((state) => state.auth.data._id);
   const dispatch = useDispatch();
   const status = useSelector((state) => state.workout.postStatus);
+  const exercises = useSelector((state) => state.favorite.favorite)
 
   const getWorkout = async () => {
     const workout = await dispatch(fetchWorkout(user));
@@ -46,24 +47,20 @@ const Favorite = () => {
 
   useEffect(() => {
     const getFavorite = async () => {
-      const favoriteExercises = await axios.get(
-        `http://localhost:4444/favorite`,
-        data._id
-      );
+      const favoriteExercises = await dispatch(fetchFavorite(data._id));
 
-      if (favoriteExercises.length === 0) {
+      if (favoriteExercises.payload.length === 0) {
         setOpenCreateWorkout(false);
       }
-      setExercises(favoriteExercises.data);
     };
-
+    
+    getFavorite()
     getWorkout();
-    getFavorite();
   }, []);
 
   useEffect(() => {
     getWorkout();
-  }, [exercises, status]);
+  }, [status]);
 
   const navigate = useNavigate();
 

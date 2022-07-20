@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 
 import { authReducer } from "./authSlice/auth";
 import { worcoutReducer } from "./workoutSlice/workout";
+import { favotiteReducer } from "./favoriteSlice/favorite";
 
 const persistConfig = {
   key: "root",
@@ -21,7 +22,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  workout: worcoutReducer
+  workout: worcoutReducer,
+  favorite: favotiteReducer,
   // все новые редюсеры надо добавлять сюда
 });
 
