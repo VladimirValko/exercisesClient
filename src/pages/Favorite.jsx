@@ -5,8 +5,9 @@ import Dumbbell from "../assets/dumbbell.png";
 import { selectIsAuth } from "../redux/authSlice/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "../utils/axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import WorkoutPlan from "../components/WorkoutPlan";
+import { fetchWorkout } from "../redux/workoutSlice/workout";
 
 // // for
 // let sumFromFor = 0;
@@ -32,13 +33,16 @@ import WorkoutPlan from "../components/WorkoutPlan";
 const Favorite = () => {
   const [exercises, setExercises] = useState([]);
   const [workout, setWorkout] = useState([]);
-  const [newProgramm, setNewProgram] = useState(false)
+  const [openCreateWorkout, setOpenCreateWorkout] = useState(false);
   const data = useSelector((state) => state.auth.data);
-  console.log(workout);
-  console.log(exercises);
+  const user = useSelector((state) => state.auth.data._id);
+  const dispatch = useDispatch();
+  const status = useSelector((state) => state.workout.postStatus);
 
-
-  
+  const getWorkout = async () => {
+    const workout = await dispatch(fetchWorkout(user));
+    setWorkout(workout.payload[0].myWorkout);
+  };
 
   useEffect(() => {
     const getFavorite = async () => {
@@ -47,24 +51,19 @@ const Favorite = () => {
         data._id
       );
 
-      if(favoriteExercises.length === 0){
-        setNewProgram(false);
+      if (favoriteExercises.length === 0) {
+        setOpenCreateWorkout(false);
       }
       setExercises(favoriteExercises.data);
     };
 
+    getWorkout();
     getFavorite();
   }, []);
 
   useEffect(() => {
-    const getWorkoutPlan = async () => {
-      const workout = await axios.get("http://localhost:4444/workouts", data._id);
-      console.log(workout.data, 'это то шо пришло в виде воркаут');
-      setWorkout(workout.data);
-    }
-
-    getWorkoutPlan();
-  }, [exercises])
+    getWorkout();
+  }, [exercises, status]);
 
   const navigate = useNavigate();
 
@@ -83,13 +82,12 @@ const Favorite = () => {
                 Create your own programm
               </h1>
               <p className="py-6">
-                Прикрутить пагинацию <br />
-                Динамическое отображение плана тренировки после добавления нового упражнения <br />
-                Длбавить таргет масл в сетворкаут <br />
-                добавить страницу с избранными упражнениями и возможностью их удалять<br />
-                Добавить к карточке упражнений кнопку ADD <br />
-                нужно удалить лишние упражнения из фаворитс оставить штук 7
+
+                Добавить страницу с избранными упражнениями и возможностью их
+                удалять
                 <br />
+                Добавить к карточке упражнений кнопку ADD <br />
+
                 прикрутить динамическое отображение данных в фаворит имя и общие
                 повторения
                 <br />
@@ -104,71 +102,58 @@ const Favorite = () => {
           </div>
         </div>
 
-        <div className=" flex items-center justify-center gap-4  text-center pb-8 font-bold text-5xl text-gray-600">
-          <p>Workout plan</p>
-          <img src={Dumbbell} alt="dumbbell" className=" w-16" />
-        </div>
+        {workout.length > 0 && (
+          <div>
+            <div className=" flex items-center justify-center gap-4  text-center pb-8 font-bold text-5xl text-gray-600">
+              <p>Workout plan</p>
+              <img src={Dumbbell} alt="dumbbell" className=" w-16" />
+            </div>
 
-        <div className="w-5/6 mx-auto ">
-          <div className="overflow-x-auto capitalize">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Target Muscle</th>
-                  <th>Sets</th>
-                  <th>Reps</th>
-                </tr>
-              </thead>
-              {workout.length ? workout[0].completedWorkout.filter(item => item.exerciseName.length > 0).map((exercise, i) => (
-                <tbody key={i}>
-                  <tr>
-                    <th>{i + 1}</th>
-                    <td>{exercise.exerciseName}</td>
-                    <td>{exercise.target}</td>
-                    <td>{exercise.goalSets}</td>
-                    <td>{exercise.goalReps}</td>
-                  </tr>
-                </tbody>
-              )) : null }
-            </table>
+            <div className="w-5/6 mx-auto ">
+              <div className="overflow-x-auto capitalize">
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>Target Muscle</th>
+                      <th>Sets</th>
+                      <th>Reps</th>
+                    </tr>
+                  </thead>
+                  {workout.length
+                    ? workout
+                        .filter((item) => item.exerciseName.length > 0)
+                        .map((exercise, i) => (
+                          <tbody key={i}>
+                            <tr>
+                              <th>{i + 1}</th>
+                              <td>{exercise.exerciseName}</td>
+                              <td>{exercise.target}</td>
+                              <td>{exercise.goalSets}</td>
+                              <td>{exercise.goalReps}</td>
+                            </tr>
+                          </tbody>
+                        ))
+                    : null}
+                </table>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
-       
-        {/* <div className="flex items-center justify-center mt-10 mb-10">
-          <button class="btn btn-outline btn-primary w-[250px] h-[60px]"
-          onClick={() => setNewProgram(!newProgramm)}
-          >
-            Create NEW Workout Plan
-          </button>
-        </div> */}
- 
-
-
-        {!newProgramm ? (<div className="flex items-center justify-center mt-10 mb-10">
-          <button class="btn btn-outline btn-primary w-[250px] h-[60px]"
-          onClick={() => setNewProgram(!newProgramm)}
-          >
-            Create NEW Workout Plan
-          </button>
-        </div>) : <WorkoutPlan exercises={exercises}/>}
-
-        {/* <div className="flex justify-center  gap-8 text-center mt-40">
-          <p className="font-bold text-6xl text-gray-600">Your Favorite Exercises </p>
-          <img src={Heart} alt="Heart" className="w-14"/>
-        </div>
-
-        <div className="flex gap-4 flex-wrap justify-center m-8">
-          {exercises.map((exercise, i) => (
-            <ExerciseCard
-              exercise={exercise}
-              key={i}
-              link={`/exercises/favorite/${exercise._id}`}
-            />
-          ))}
-        </div> */}
+        {!openCreateWorkout ? (
+          <div className="flex items-center justify-center mt-10 mb-10">
+            <button
+              class="btn btn-outline btn-primary w-[250px] h-[60px]"
+              onClick={() => setOpenCreateWorkout(!openCreateWorkout)}
+            >
+              Create Workout Plan
+            </button>
+          </div>
+        ) : (
+          <WorkoutPlan exercises={exercises} />
+        )}
       </div>
     );
   } else {

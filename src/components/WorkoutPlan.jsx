@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import axios from "../utils/axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setWorkout, updateWorkout } from '../redux/workoutSlice/workout'
 
-const WorkoutPlan = ({ exercises }) => {
-  const [workout, setWorkout] = useState([]);
+const WorkoutPlan = ({ exercises }) => { 
   const [exerciseName, setExerciseName] = useState("");
   const [goalSets, setGoalSets] = useState(1);
   const [goalReps, setGoalReps] = useState(8);
@@ -12,19 +12,8 @@ const WorkoutPlan = ({ exercises }) => {
   const [target, setTarget] = useState('');
   const [exerciseImage, setExerciseImage] = useState("");
   const user = useSelector((state) => state.auth.data._id);
-
-  console.log(workout.length, 'workout');
-  console.log(goalSets, goalReps, exerciseName, weight, target, user);
-  
-  const getWorkoutPlan = async () => {
-    const workout = await axios.get("http://localhost:4444/workouts", {user});
-    console.log(workout.data, 'это то шо пришло в виде воркаут');
-    setWorkout(workout.data);
-    if(workout.data.length === 0){
-      addWorkout()
-      console.log('было пусто добавил воркаут');
-    }
-  }
+  const dispatch = useDispatch();
+  const workout = useSelector((state) => state.workout.myWorkout)
    
 
   const onExerciseNameChange = (e) => {
@@ -42,17 +31,14 @@ const WorkoutPlan = ({ exercises }) => {
       "http://localhost:4444/workouts",
       {goalSets, goalReps, exerciseName, weight, target, user }
     );
-    setWorkout(data);
-    console.log(workout);
+    console.log(data);
     console.log('было пусто добавил тренировку');
   };
 
-  const updateWorkout = async () => {
-    const { data } = await axios.patch(
-      "http://localhost:4444/workouts",
+  const updateWorkoutupload = async () => {
+    const { data } = await dispatch(updateWorkout(
       {goalSets, goalReps, exerciseName, weight, user, target }
-    );
-    console.log(data, "отпатчилось");
+    ));
   }
 
   const changeImg = (value) => {
@@ -65,10 +51,13 @@ const WorkoutPlan = ({ exercises }) => {
     if(exercises.length > 0){
       changeImg(exercises[0].name);
       setExerciseName(exercises[0].name);
-      getWorkoutPlan();
       setTarget(exercises[0].target);
     }
-    
+
+    if(workout.length === 0){
+          addWorkout()
+          console.log('было пусто добавил воркаут');
+        }
   }, []);
 
   return (
@@ -143,7 +132,7 @@ const WorkoutPlan = ({ exercises }) => {
             </div>
             <button
               class="btn btn-outline btn-primary mt-6"
-              onClick={() => updateWorkout()}
+              onClick={() => updateWorkoutupload()}
             >
               Add to Workout
             </button>
@@ -157,13 +146,5 @@ const WorkoutPlan = ({ exercises }) => {
     </div>
   );
 };
-
-// отображаем селекты с упражнениями из списка фаворитс
-// рядом с каждым упражнением селекты кол-во сетс и репс
-// внизу кнопка - создать план тренировки
-// она переводит на страницу фаворитс с таблицой
-// которая отображает план тренировки
-
-// нужен новый бэк, раздел в монго
 
 export default WorkoutPlan;
