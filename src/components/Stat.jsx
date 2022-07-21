@@ -5,12 +5,14 @@ const Stat = (data) => {
 
     const exercise = useSelector((state) => state.favorite.favorite);
     const name = useSelector((state) => state.auth.data.fullName);
-    const workout = useSelector((state) => state.workout.myWorkout);
+    const workouts = useSelector((state) => state.workout.myWorkouts);
 
     let sets = 0;
     let reps = 0;
-    workout?.forEach(item => sets += Number(item.goalSets));
-    workout?.forEach(item => reps += Number(item.goalReps));
+
+    workouts.forEach(workout => workout.myWorkout.forEach(exercise => sets += Number(exercise.goalSets)));
+
+    workouts.forEach(workout => workout.myWorkout.forEach(exercise => reps += Number(exercise.goalReps)));
     
   return (
     <div className="stats shadow-md">
