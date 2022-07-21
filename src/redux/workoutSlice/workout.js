@@ -7,23 +7,26 @@ export const fetchWorkout = createAsyncThunk('workout/fetchWorkout', async (para
 });
 
 export const addWorkout = createAsyncThunk('workout/addWorkout', async (params) => {
+    console.log(params);
     const { data } = await axios.post(
         "http://localhost:4444/workouts", params
       );
+      console.log(data, 'created from RtK')
     return data;
 });
 
 export const updateWorkout = createAsyncThunk('workout/addWorkout', async (params) => {
-    console.log(params)
+    console.log(params, 'params')
     const { data } = await axios.patch(
         "http://localhost:4444/workouts",
         params
-      );
+        );
+        console.log(data, 'returnet when update')
     return data;
 });
 
 const initialState = {
-    myWorkout: [],
+    myWorkouts: [],
     completedWorkouts: [],
     status: 'loading',
     postStatus: 'loading'
@@ -34,7 +37,7 @@ const workoutSlice = createSlice({
     initialState,
     reducers: {
         setWorkout: (state, action) => {
-            state.myWorkout = action.payload;
+            state.myWorkouts.push(action.payload);
             console.log('workoutSlice added')
         }
     },
@@ -43,7 +46,7 @@ const workoutSlice = createSlice({
             state.status = 'loading';
         },
         [fetchWorkout.fulfilled]: (state, action) => {
-            state.myWorkout = action.payload[0].myWorkout;
+            state.myWorkouts = action.payload;
             state.status = 'loaded';
         }, 
         [fetchWorkout.rejected]: (state) => {
@@ -54,8 +57,9 @@ const workoutSlice = createSlice({
         [addWorkout.pending]: (state) => {
             state.postStatus = 'loading';
         },
-        [addWorkout.fulfilled]: (state) => {
+        [addWorkout.fulfilled]: (state, action) => {
             state.postStatus = 'loaded';
+            state.myWorkouts.push(action.payload[0].myWorkout);
         }, 
         [addWorkout.rejected]: (state) => {
             state.postStatus = 'error';
@@ -64,8 +68,9 @@ const workoutSlice = createSlice({
         [updateWorkout.pending]: (state) => {
             state.postStatus = 'loading';
         },
-        [updateWorkout.fulfilled]: (state) => {
+        [updateWorkout.fulfilled]: (state, action) => {
             state.postStatus = 'loaded';
+            state.myWorkouts = action.payload;
         }, 
         [updateWorkout.rejected]: (state) => {
             state.postStatus = 'error';

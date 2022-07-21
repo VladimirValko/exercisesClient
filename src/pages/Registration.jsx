@@ -12,8 +12,7 @@ export const Registration = () => {
 
   const {
     register,
-    handleSubmit,
-    setError,
+    handleSubmit, setError,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {

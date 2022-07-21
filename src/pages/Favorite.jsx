@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Women from "../assets/favwomen.jpg";
 import Stat from "../components/Stat";
 import Dumbbell from "../assets/dumbbell.png";
+import { Link } from "react-scroll";
 import { selectIsAuth } from "../redux/authSlice/auth";
 import { useNavigate } from "react-router-dom";
 import { fetchFavorite } from "../redux/favoriteSlice/favorite";
@@ -32,17 +33,20 @@ import { setFavorite } from "../redux/favoriteSlice/favorite";
 // console.log("sumFromReduce", sumFromReduce);
 
 const Favorite = () => {
-  const [workout, setWorkout] = useState([]);
+  const [workouts, setWorkouts] = useState([]);
   const [openCreateWorkout, setOpenCreateWorkout] = useState(false);
   const data = useSelector((state) => state.auth.data);
   const user = useSelector((state) => state.auth.data._id);
   const dispatch = useDispatch();
   const status = useSelector((state) => state.workout.postStatus);
-  const exercises = useSelector((state) => state.favorite.favorite)
+  const exercises = useSelector((state) => state.favorite.favorite);
+
+  console.log(workouts.length);
 
   const getWorkout = async () => {
-    const workout = await dispatch(fetchWorkout(user));
-    setWorkout(workout.payload[0].myWorkout);
+    const fetchedWorkout = await dispatch(fetchWorkout(user));
+    console.log(fetchedWorkout.payload);
+    setWorkouts(fetchedWorkout.payload);
   };
 
   useEffect(() => {
@@ -76,7 +80,7 @@ const Favorite = () => {
             />
             <div>
               <h1 className="text-6xl font-extrabold text-gray-600">
-                Create your own programm
+                Create your own programs
               </h1>
               <p className="py-6">
 
@@ -93,59 +97,62 @@ const Favorite = () => {
                 <br />
                 создать анимацию загрузки для раздела фаворитс <br />
               </p>
-              {/* <button class="btn btn-primary">Get Started</button> */}
+              {/* <button className="btn btn-primary">Get Started</button> */}
               <Stat />
             </div>
           </div>
         </div>
 
-        {workout.length > 0 && (
-          <div>
-            <div className=" flex items-center justify-center gap-4  text-center pb-8 font-bold text-5xl text-gray-600">
-              <p>Workout plan</p>
-              <img src={Dumbbell} alt="dumbbell" className=" w-16" />
-            </div>
-
-            <div className="w-5/6 mx-auto ">
-              <div className="overflow-x-auto capitalize">
-                <table className="table w-full">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <th>Target Muscle</th>
-                      <th>Sets</th>
-                      <th>Reps</th>
-                    </tr>
-                  </thead>
-                  {workout.length
-                    ? workout
-                        .filter((item) => item.exerciseName.length > 0)
-                        .map((exercise, i) => (
-                          <tbody key={i}>
-                            <tr>
-                              <th>{i + 1}</th>
-                              <td>{exercise.exerciseName}</td>
-                              <td>{exercise.target}</td>
-                              <td>{exercise.goalSets}</td>
-                              <td>{exercise.goalReps}</td>
-                            </tr>
-                          </tbody>
-                        ))
-                    : null}
-                </table>
-              </div>
-            </div>
-          </div>
+        {workouts  && workouts.map((workout) => (
+               <div>
+               <div className="mt-16 flex items-center justify-center gap-4  text-center pb-8 font-bold text-5xl text-gray-600">
+                 <p>{workout.workoutName}</p>
+                 <img src={Dumbbell} alt="dumbbell" className=" w-16" />
+               </div>
+   
+               <div className="w-5/6 mx-auto ">
+                 <div className="overflow-x-auto capitalize">
+                   <table className="table w-full">
+                     <thead>
+                       <tr>
+                         <th></th>
+                         <th>Name</th>
+                         <th>Target Muscle</th>
+                         <th>Sets</th>
+                         <th>Reps</th>
+                       </tr>
+                     </thead>
+                     {workout
+                       && workout.myWorkout
+                           .filter((item) => item.exerciseName.length > 0)
+                           .map((exercise, i) => (
+                             <tbody key={i}>
+                               <tr>
+                                 <th>{i + 1}</th>
+                                 <td>{exercise.exerciseName}</td>
+                                 <td>{exercise.target}</td>
+                                 <td>{exercise.goalSets}</td>
+                                 <td>{exercise.goalReps}</td>
+                               </tr>
+                             </tbody>
+                           ))}
+                       
+                   </table>
+                  
+                 </div>
+               </div>
+             </div>
+        )
+     
         )}
 
         {!openCreateWorkout ? (
           <div className="flex items-center justify-center mt-10 mb-10">
             <button
-              class="btn btn-outline btn-primary w-[250px] h-[60px]"
+              className="btn btn-outline btn-primary w-[250px] h-[60px]"
               onClick={() => setOpenCreateWorkout(!openCreateWorkout)}
             >
-              Create Workout Plan
+              Edit Workouts
             </button>
           </div>
         ) : (

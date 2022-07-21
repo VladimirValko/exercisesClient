@@ -28,18 +28,18 @@ const Navbar = () => {
             <Link to='/'>
             <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>Home</li>
             </Link>
-            {isToken ? (<Link to='/favorite'>
+            {isAuth ? (<Link to='/favorite'>
             <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>My Programm</li>
             </Link>) : (<Link to='/login'>
             <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>My Programm</li>
             </Link>)}
             <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>Mobile App</li>
-            {!isToken ? (<Link to="/Login">
+            {!isAuth ? (<Link to="/Login">
             <button className="btn btn-secondary">Log-In</button>
             </Link>) : (<Link to="/Login">
             <button className="btn btn-secondary" onClick={() => onClickLogout()}>Log-Out</button>
             </Link>)}
-            {!isToken && <Link to="/registration"><button className="btn btn-primary">Sign-Up</button></Link>}
+            {!isAuth && <Link to="/registration"><button className="btn btn-primary">Sign-Up</button></Link>}
         </ul>
     </div>
   )
