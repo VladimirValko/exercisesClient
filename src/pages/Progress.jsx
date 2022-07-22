@@ -11,8 +11,7 @@ const Progress = () => {
   const completedWorkout = useSelector((state) => state.workout.completedWorkout);
   const user = useSelector((state) => state.auth.data._id);
   const [currentWorkout, setcurrentWorkout] = useState([]);
-  const [currentExercise, setcurrentExercise] = useState('')
-  const [exerciseName, setExerciseName] = useState('');
+  const [currentexerciseName, setCurrentExerciseName] = useState('');
   const [workoutName, setWorkoutName] = useState('')
   const [goalSets, setGoalSets] = useState(0);
   const [actualSets, setActualSets] = useState(0);
@@ -21,74 +20,68 @@ const Progress = () => {
   const [goalWeight, setGoalWeight] = useState(0);
   const [actualWeight, setActualWeight] = useState(0);
 
-  useEffect(() => {
-    setcurrentWorkout(workouts[0]);
-    // console.log(currentWorkout, 'currentWorkout useeffect');
-  }, []);
+    useEffect(() => {
+        setcurrentWorkout(workouts[0]);
+    }, []);
 
-  const dispatch = useDispatch();
-    // console.log(completedWorkout, 'completedWorkout');
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    setcurrentExercise(currentWorkout[0]?.exerciseName);
-    setGoalSets(currentWorkout[0]?.goalSets);
-    setGoalReps(currentWorkout[0]?.goalReps);
-    setGoalWeight(currentWorkout[0]?.weight);
-
-    }, [exerciseName])
-
-
-
-
-    console.log(exerciseName, workoutName, goalSets, actualSets, goalReps, actualReps, goalWeight, actualWeight);
-    console.log(currentWorkout, 'currentWorkout');
-
+    const onExerxiseChange = (e) => {
+        setCurrentExerciseName(e.target.value);
+        console.log(currentWorkout, "currentWorkout");
+    }
+ 
+    useEffect(() => {
+        currentWorkout?.forEach(item => {
+            if(item.exerciseName === currentexerciseName){
+                setGoalSets(item.goalSets);
+                setGoalReps(item.goalReps);
+                setGoalWeight(item.weight);
+            }
+        })
+    }, [currentexerciseName])
 
 
-
-
+    console.log(currentexerciseName, workoutName, goalSets, actualSets, goalReps, actualReps, goalWeight, actualWeight);
 
     const uploadCompletedWorkoutupload = async () => {
-        if(workoutName !== "Choose From Your Workouts" && exerciseName !== "Choose from Your Favorite Exercises"){
+        if(workoutName !== "Choose From Your Workouts" && currentexerciseName !== "Choose from Your Favorite Exercises"){
           const { data } = await dispatch(
             addCompletedWorkout({
-                exerciseName, workoutName, goalSets, actualSets, goalReps, actualReps, goalWeight, actualWeight, user
+                currentexerciseName, workoutName, goalSets, actualSets, goalReps, actualReps, goalWeight, actualWeight, user
             })
           );
           console.log(data, 'data');
         }
     };
 
+console.log(completedWorkout, 'completedWorkout');
+
+
+
+    const chooseCurrentWorkout = (e) => {
+        const workout = workouts.filter(
+        (workout) => workout.workoutName === e.target.value
+        );
+        setcurrentWorkout(workout[0].myWorkout);
+        setWorkoutName(workout[0].workoutName);
+        console.log(workout, 'workout при смене');
+        console.log(workoutName, 'workoutName при смене');
+
+    };
 
 
 
 
 
-  const chooseCurrentWorkout = (e) => {
-    const workout = workouts.filter(
-      (workout) => workout.workoutName === e.target.value
-    );
-    setcurrentWorkout(workout[0].myWorkout);
-    setWorkoutName(workout[0].workoutName);
-    console.log(workout, 'workout при смене');
-    console.log(workoutName, 'workoutName при смене');
+    // const createBlancWorkout = async () => {
+    //     // const goalSets = currentExercise?.goalSets;
+    //     // const goalReps = currentExercise?.goalReps;
+    //     // const goalWeight = currentExercise?.weight;
 
-  };
+    // };
 
-
-
-
-
-  const createBlancWorkout = async () => {
-    const goalSets = currentExercise?.goalSets;
-    const goalReps = currentExercise?.goalReps;
-    const goalWeight = currentExercise?.weight;
-
-    console.log(goalSets, goalReps, goalWeight);
-
-  };
-
-  console.log(workouts);
+    console.log(workouts, "workouts");
 
   return (
     // INPUTS
@@ -111,7 +104,7 @@ const Progress = () => {
               </p>
               <button 
                 class="btn btn-primary"
-                onClick={() => createBlancWorkout()}
+                onClick={() => {}}
                 >Create completed workout</button>
             </div>
           </div>
@@ -144,7 +137,7 @@ const Progress = () => {
                   </label>
                   <select
                     className="select select-bordered capitalize"
-                    onChange={(e) => setExerciseName(e.target.value)}
+                    onChange={(e) => onExerxiseChange(e)}
                   >
                     <option defaultValue>
                       Choose from your favorite exercises
