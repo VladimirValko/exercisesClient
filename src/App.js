@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Favorite from './pages/Favorite';
 import Exercise from './pages/Exercise';
 import FavoritePage from './pages/FavoritePage';
+import Progress from './pages/Progress';
 import Login from './pages/Login';
 import { Registration }  from './pages/Registration';
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/exercises/exercise/:id" element={<Exercise />} />
         <Route path="/exercises/favorite/:id" element={<FavoritePage />} />
+        <Route path="/progress" element={<Progress />} />
         <Route path="/login" element={<Login />}/>
         <Route path="/registration" element={<Registration />}/>
       </Routes>

@@ -41,36 +41,40 @@ const WorkoutPlan = ({ exercises }) => {
 
   const addNewWorkout = async () => {
     setWorkoutName("New workout");
-    const { data } = await dispatch(
-      addWorkout({
-        goalSets,
-        goalReps,
-        exerciseName,
-        weight,
-        target,
-        user,
-        workoutName,
-      })
-    );
-    console.log(data);
+    if(exerciseName !== "Choose from Your Favorite Exercises"){
+      const { data } = await dispatch(
+        addWorkout({
+          goalSets,
+          goalReps,
+          exerciseName,
+          weight,
+          target,
+          user,
+          workoutName,
+        })
+      )
+      console.log(data);
+    };
     console.log("было пусто добавил тренировку");
     setNew(!isNew)
   };
 
   const updateWorkoutupload = async () => {
-    const { data } = await dispatch(
-      updateWorkout({
-        goalSets,
-        goalReps,
-        exerciseName,
-        weight,
-        user,
-        target,
-        workoutName,
-      })
-    );
+    if(workoutName !== "Choose From Your Workouts" && exerciseName !== "Choose from Your Favorite Exercises"){
+      const { data } = await dispatch(
+        updateWorkout({
+          goalSets,
+          goalReps,
+          exerciseName,
+          weight,
+          user,
+          target,
+          workoutName,
+        })
+      );
+      console.log(data);
+    }
     setNew(!isNew)
-    console.log(data);
   };
 
   const changeImg = (value) => {
@@ -81,17 +85,8 @@ const WorkoutPlan = ({ exercises }) => {
 
   useEffect(() => {
     if (exercises.length > 0) {
-      // changeImg(exercises[0].name);
-      // setExerciseName(exercises[0].name);
       setTarget(exercises[0].target);
     }
-
-
-
-    // if(workouts?.length === 0){
-    //       addNewWorkout()
-    //       console.log('было пусто добавил воркаут');
-    //     }
   }, []);
 
   return (

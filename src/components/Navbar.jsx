@@ -29,11 +29,13 @@ const Navbar = () => {
             <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>Home</li>
             </Link>
             {isAuth ? (<Link to='/favorite'>
-            <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>My Programm</li>
+            <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>Workouts</li>
             </Link>) : (<Link to='/login'>
-            <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>My Programm</li>
+            <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>Workouts</li>
             </Link>)}
-            <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>Mobile App</li>
+            {isAuth ? (<Link to="/progress">
+            <li className='hover:text-[#e11d48] cursor-pointer hover:shadow-sm'>My Progress</li>
+            </Link>) : null}
             {!isAuth ? (<Link to="/Login">
             <button className="btn btn-secondary">Log-In</button>
             </Link>) : (<Link to="/Login">

@@ -98,7 +98,7 @@ const Favorite = () => {
                 создать анимацию загрузки для раздела фаворитс <br />
               </p>
               {/* <button className="btn btn-primary">Get Started</button> */}
-              <Stat />
+              <Stat workouts={workouts} />
             </div>
           </div>
         </div>

@@ -42,7 +42,7 @@ const Search = () => {
         </div>
         <div className='flex flex-wrap gap-4 justify-center items-center'>
         {exercises && exercises.map((exercise, i) => (
-          <ExerciseCard exercise={exercise} key={i} link={`/exercises/exercise/${exercise._id}`}/>
+          <ExerciseCard exercise={exercise} key={i}/>
         ))}
         </div>
     </div>

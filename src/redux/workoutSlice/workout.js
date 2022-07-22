@@ -25,9 +25,23 @@ export const updateWorkout = createAsyncThunk('workout/addWorkout', async (param
     return data;
 });
 
+
+export const addCompletedWorkout = createAsyncThunk('workout/addCompletedWorkout', async (params) => {
+    console.log(params);
+    const { data } = await axios.post(
+        "http://localhost:4444/progress", params
+      );
+      console.log(data, 'created COMPLETED from RtK')
+    return data;
+});
+
+
+
+
 const initialState = {
     myWorkouts: [],
     completedWorkouts: [],
+    completedWorkout: [],
     status: 'loading',
     postStatus: 'loading'
 }
@@ -54,16 +68,17 @@ const workoutSlice = createSlice({
         },
 
 
-        [addWorkout.pending]: (state) => {
+        [addCompletedWorkout.pending]: (state) => {
             state.postStatus = 'loading';
         },
-        [addWorkout.fulfilled]: (state, action) => {
+        [addCompletedWorkout.fulfilled]: (state, action) => {
             state.postStatus = 'loaded';
-            state.myWorkouts.push(action.payload[0].myWorkout);
+            state.completedWorkout = action.payload;
         }, 
-        [addWorkout.rejected]: (state) => {
+        [addCompletedWorkout.rejected]: (state) => {
             state.postStatus = 'error';
         },
+
 
         [updateWorkout.pending]: (state) => {
             state.postStatus = 'loading';

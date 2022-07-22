@@ -1,18 +1,19 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 
-const Stat = (data) => {
+const Stat = ({workouts}) => {
 
     const exercise = useSelector((state) => state.favorite.favorite);
     const name = useSelector((state) => state.auth.data.fullName);
-    const workouts = useSelector((state) => state.workout.myWorkouts);
+
+    console.log(workouts);
 
     let sets = 0;
     let reps = 0;
 
-    workouts.forEach(workout => workout.myWorkout.forEach(exercise => sets += Number(exercise.goalSets)));
+    workouts?.forEach(workout => workout.myWorkout.forEach(exercise => sets += Number(exercise.goalSets)));
 
-    workouts.forEach(workout => workout.myWorkout.forEach(exercise => reps += Number(exercise.goalReps)));
+    workouts?.forEach(workout => workout.myWorkout.forEach(exercise => reps += Number(exercise.goalReps)));
     
   return (
     <div className="stats shadow-md">
