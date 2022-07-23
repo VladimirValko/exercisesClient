@@ -4,7 +4,6 @@ import Top from '../components/Top';
 import Search from '../components/Search';
 
 const Home = () => {
-
   const token = window.localStorage.getItem('token');
   
   return (

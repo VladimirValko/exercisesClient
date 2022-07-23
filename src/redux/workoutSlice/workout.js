@@ -36,8 +36,11 @@ export const addCompletedWorkout = createAsyncThunk('workout/addCompletedWorkout
 });
 
 export const fetchCompleted = createAsyncThunk('workout/fetchCompleted', async (params) => {
-    const { data } = await axios.get("http://progress:4444/workouts", params);
+    console.log(params, 'PARAMPAMPAMS')
+    const { data } = await axios.get("http://localhost:4444/progress", params);
+    console.log(data)
     return data;
+    
 });
 
 
@@ -63,6 +66,7 @@ const workoutSlice = createSlice({
         },
         pushExercise: (state, action) => {
             console.log(state.completedWorkout)
+            console.log(action.payload)
             state.completedWorkout.push(action.payload);
         }
     },
@@ -84,7 +88,7 @@ const workoutSlice = createSlice({
         },
         [addCompletedWorkout.fulfilled]: (state, action) => {
             state.postStatus = 'loaded';
-            state.completedWorkout = ""
+            state.completedWorkout = [];
         }, 
         [addCompletedWorkout.rejected]: (state) => {
             state.postStatus = 'error';
@@ -95,8 +99,8 @@ const workoutSlice = createSlice({
             state.status = 'loading';
         },
         [fetchCompleted.fulfilled]: (state, action) => {
-            state.completedWorkouts = action.payload;
             state.status = 'loaded';
+            state.completedWorkouts = action.payload;
         }, 
         [fetchCompleted.rejected]: (state) => {
             state.status = 'error';

@@ -110,13 +110,13 @@ const Favorite = () => {
                  <img src={Dumbbell} alt="dumbbell" className=" w-16" />
                </div>
    
-               <div className="w-5/6 mx-auto ">
+               <div className="w-5/6 mx-auto shadow-md rounded-md">
                  <div className="overflow-x-auto capitalize">
-                   <table className="table w-full">
+                   <table className="table w-full text-center">
                      <thead>
                        <tr>
                          <th></th>
-                         <th>Name</th>
+                         <th className="text-left">Name</th>
                          <th>Target Muscle</th>
                          <th>Sets</th>
                          <th>Reps</th>
@@ -129,7 +129,7 @@ const Favorite = () => {
                              <tbody key={i}>
                                <tr>
                                  <th>{i + 1}</th>
-                                 <td>{exercise.exerciseName}</td>
+                                 <td className="text-left">{exercise.exerciseName}</td>
                                  <td>{exercise.target}</td>
                                  <td>{exercise.goalSets}</td>
                                  <td>{exercise.goalReps}</td>
