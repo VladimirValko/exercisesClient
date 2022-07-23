@@ -1,17 +1,7 @@
 import React from "react";
 import axios from '../utils/axios'
 
-const ExerciseCard = ({ exercise, onClick }) => {
-
-  const addToFavorite = async () => {
-    const { data } = await axios.post(
-      `http://localhost:4444/exercises/exercise/${exercise._id}`,
-      { ...exercise }
-    );
-    console.log(data);
-    window.alert("added or smthng");
-  };
-
+const ExerciseCard = ({ exercise, onClick, action, text }) => {
 
   return (
     <div class="card w-80 bg-gray-100 shadow-xl h-[500px] m-8">
@@ -26,8 +16,8 @@ const ExerciseCard = ({ exercise, onClick }) => {
         <div className="card-actions justify-center ">
         <button 
         class="btn btn-outline btn-primary btn-sm"
-        onClick={() => addToFavorite()}
-        >Add to Favorite</button>
+        onClick={() => action(exercise)}
+        >{text}</button>
         </div>
       </div>
     </div>

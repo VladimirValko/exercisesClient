@@ -8,18 +8,28 @@ import { useNavigate } from "react-router-dom";
 const HorizontalScroll = () => {
   const [exercises, setExercises] = useState([]);
   console.log(exercises);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const addToFavorite = async (exercise) => {
+    const { data } = await axios.post(
+      `http://localhost:4444/exercises/exercise/${exercise._id}`,
+      { ...exercise }
+    );
+    console.log(data, 'ADDED TO FAVORITE');
+    window.alert("Exercise added to your Favorits!");
+  };
 
   const onClickCard  = (link) => {
     navigate(`/exercises/exercise/${link}`)
-  }
+  };
 
   useEffect(() => {
-    const getFavorite = async () => {
+    const getTop = async () => {
       const TopExercises = await axios.get(`http://localhost:4444/`);
       setExercises(TopExercises.data);
+      console.log(TopExercises);
     }
-    getFavorite();
+    getTop();
   }, [])
 
   return (
@@ -30,6 +40,8 @@ const HorizontalScroll = () => {
                       exercise={item} 
                       key={i}
                       className='m-10'
+                      action={addToFavorite}
+                      text={"Add to Favorite"}
                     />
             </div>)
             

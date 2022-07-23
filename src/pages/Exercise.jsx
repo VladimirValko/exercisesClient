@@ -8,14 +8,14 @@ const Exercise = () => {
 
   console.log(exerciseDetailData);
 
-  const addToFavorite = async () => {
-    const { data } = await axios.post(
-      `http://localhost:4444/exercises/exercise/${id}`,
-      { ...exerciseDetailData }
-    );
-    console.log(data);
-    window.alert("added or smthng");
-  };
+  // const addToFavorite = async () => {
+  //   const { data } = await axios.post(
+  //     `http://localhost:4444/exercises/exercise/${id}`,
+  //     { ...exerciseDetailData }
+  //   );
+  //   console.log(data);
+  //   window.alert("added or smthng");
+  // };
 
   useEffect(() => {
     const fetchExerciseData = async () => {
@@ -23,6 +23,8 @@ const Exercise = () => {
         `http://localhost:4444/exercises/exercise/${id}`
       );
       
+
+      console.log(exercisesDetail, 'first try');
       if(exercisesDetail.data === null) {
         exercisesDetail = await axios.get(
           `http://localhost:4444/exercises/top/${id}`
@@ -50,12 +52,6 @@ const Exercise = () => {
              {exerciseDetailData.name}
            </h1>
            <p className="py-6 text-xl">{exerciseDetailData.description}</p>
-           <button
-             className="btn btn-primary"
-             onClick={() => addToFavorite()}
-           >
-             Add to Favorite
-           </button>
          </div>
        </div>
      </div>

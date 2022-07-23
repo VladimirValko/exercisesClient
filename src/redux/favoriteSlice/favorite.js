@@ -10,21 +10,15 @@ export const fetchFavorite = createAsyncThunk('favorite/fetchFavorite', async (p
     return data;
 });
 
-// export const addWorkout = createAsyncThunk('workout/addWorkout', async (params) => {
-//     const { data } = await axios.post(
-//         "http://localhost:4444/workouts", params
-//       );
-//     return data;
-// });
+export const deleteFavorite = createAsyncThunk('favorite/deleteFavorite', async (params) => {
+    const { data } = await axios.delete(
+        `http://localhost:4444/favorite`,
+        params
+      );
+      console.log('fetched')
+    return data;
+});
 
-// export const updateWorkout = createAsyncThunk('workout/addWorkout', async (params) => {
-//     console.log(params)
-//     const { data } = await axios.patch(
-//         "http://localhost:4444/workouts",
-//         params
-//       );
-//     return data;
-// });
 
 const initialState = {
     favorite: [],
@@ -50,25 +44,17 @@ const favotiteSlice = createSlice({
         },
 
 
-        // [addWorkout.pending]: (state) => {
-        //     state.postStatus = 'loading';
-        // },
-        // [addWorkout.fulfilled]: (state) => {
-        //     state.postStatus = 'loaded';
-        // }, 
-        // [addWorkout.rejected]: (state) => {
-        //     state.postStatus = 'error';
-        // },
+        [deleteFavorite.pending]: (state) => {
+            state.status = 'loading';
+        },
+        [deleteFavorite.fulfilled]: (state) => {
+            state.status = 'loaded';
+        }, 
+        [deleteFavorite.rejected]: (state) => {
+            state.status = 'error';
+        },
 
-        // [updateWorkout.pending]: (state) => {
-        //     state.postStatus = 'loading';
-        // },
-        // [updateWorkout.fulfilled]: (state) => {
-        //     state.postStatus = 'loaded';
-        // }, 
-        // [updateWorkout.rejected]: (state) => {
-        //     state.postStatus = 'error';
-        // },
+
 }
 
 });
