@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import img from "../assets/bgwoman.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import Dumbbell from "../assets/dumbbell.png";
-import {addCompletedWorkout, updateCompletedWorkout} from '../redux/workoutSlice/workout'
+import {addCompletedWorkout, updateCompletedWorkout, pushExercise} from '../redux/workoutSlice/workout'
 
 
 
 const Progress = () => {
+  const completedWorkouts = useSelector((state) => state.workout.completedWorkouts)
   const workouts = useSelector((state) => state.workout.myWorkouts);
   const completedWorkout = useSelector((state) => state.workout.completedWorkout);
   const user = useSelector((state) => state.auth.data._id);
@@ -20,44 +21,14 @@ const Progress = () => {
   const [goalWeight, setGoalWeight] = useState(0);
   const [actualWeight, setActualWeight] = useState(0);
 
+  const oneExercise = [];
+
     useEffect(() => {
         setcurrentWorkout(workouts[0]);
+        console.log(completedWorkout);
     }, []);
 
     const dispatch = useDispatch();
-
-    const onExerxiseChange = (e) => {
-        setCurrentExerciseName(e.target.value);
-        console.log(currentWorkout, "currentWorkout");
-    }
- 
-    useEffect(() => {
-        currentWorkout?.forEach(item => {
-            if(item.exerciseName === currentexerciseName){
-                setGoalSets(item.goalSets);
-                setGoalReps(item.goalReps);
-                setGoalWeight(item.weight);
-            }
-        })
-    }, [currentexerciseName])
-
-
-    console.log(currentexerciseName, workoutName, goalSets, actualSets, goalReps, actualReps, goalWeight, actualWeight);
-
-    const uploadCompletedWorkoutupload = async () => {
-        if(workoutName !== "Choose From Your Workouts" && currentexerciseName !== "Choose from Your Favorite Exercises"){
-          const { data } = await dispatch(
-            addCompletedWorkout({
-                currentexerciseName, workoutName, goalSets, actualSets, goalReps, actualReps, goalWeight, actualWeight, user
-            })
-          );
-          console.log(data, 'data');
-        }
-    };
-
-console.log(completedWorkout, 'completedWorkout');
-
-
 
     const chooseCurrentWorkout = (e) => {
         const workout = workouts.filter(
@@ -70,18 +41,51 @@ console.log(completedWorkout, 'completedWorkout');
 
     };
 
+    const onExerxiseChange = (e) => {
+        setCurrentExerciseName(e.target.value);
+        console.log(currentWorkout, "currentWorkout");
+    }
+ 
+    useEffect(() => {
+        if(currentWorkout.length){
+            currentWorkout.forEach(item => {
+                if(item.exerciseName === currentexerciseName){
+                    setGoalSets(item.goalSets);
+                    setGoalReps(item.goalReps);
+                    setGoalWeight(item.weight);
+                }
+            })
+        }
+        
+    }, [currentexerciseName])
+
+
+    console.log(currentexerciseName, workoutName, goalSets, actualSets, goalReps, actualReps, goalWeight, actualWeight);
+
+    const createCompletedWorkoutupload = async () => {
+        const { data } = await dispatch(
+        addCompletedWorkout({
+            completedWorkout, workoutName, user
+        })
+        );
+        console.log(data, 'data');
+    };
+
+    const updateCompletedWorkoutupload = async () => {
+        if(workoutName !== "Choose From Your Workouts" && currentexerciseName !== "Choose from Your Favorite Exercises"){
+            oneExercise.push({currentexerciseName, goalSets, actualSets, goalReps, actualReps, goalWeight, actualWeight});
+
+            dispatch(pushExercise(oneExercise[0]))
+          ;
+          console.log(oneExercise, 'oneExercise');
+        }
+    };
 
 
 
 
-    // const createBlancWorkout = async () => {
-    //     // const goalSets = currentExercise?.goalSets;
-    //     // const goalReps = currentExercise?.goalReps;
-    //     // const goalWeight = currentExercise?.weight;
-
-    // };
-
-    console.log(workouts, "workouts");
+    console.log(completedWorkout, 'completedWorkout');
+    console.log(completedWorkouts, 'completedWorkouts FROM SERVER')
 
   return (
     // INPUTS
@@ -89,21 +93,21 @@ console.log(completedWorkout, 'completedWorkout');
     <div className="">
       <div className="flex justify-center">
         <div
-          class="hero h-[400px] shadow-xl mt-4 w-11/12 rounded-2xl"
+          className="hero h-[400px] shadow-xl mt-4 w-11/12 rounded-2xl"
           style={{ backgroundImage: `url(${img})` }}
         >
-          <div class="hero-overlay bg-white bg-opacity-10"></div>
-          <div class="hero-content text-center text-neutral-content">
-            <div class="">
-              <h1 class="mb-5 z-10 text-6xl text-white font-extrabold">
+          <div className="hero-overlay bg-white bg-opacity-10"></div>
+          <div className="hero-content text-center text-neutral-content">
+            <div className="">
+              <h1 className="mb-5 z-10 text-6xl text-white font-extrabold">
                 Track Your Progress
               </h1>
-              <p class="mb-5 text-gray-200">
+              <p className="mb-5 text-gray-200">
                 Create and complete your workouts, <br /> track how many sets
                 and reps you planed to do and how many of them you actualy did.
               </p>
               <button 
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={() => {}}
                 >Create completed workout</button>
             </div>
@@ -151,30 +155,30 @@ console.log(completedWorkout, 'completedWorkout');
               </div>
 
               <div>
-                <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Choose number of Sets</span>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Choose number of Sets</span>
                   </label>
-                  <label class="input-group ">
+                  <label className="input-group ">
                     <input
                       type="number"
                       placeholder="Sets"
-                      class="input input-bordered w-[250px]"
+                      className="input input-bordered w-[250px]"
                       onChange={(e) => setActualSets(e.target.value)}
                     />
                     <span>SETS</span>
                   </label>
                 </div>
 
-                <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Choose number of Reps</span>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Choose number of Reps</span>
                   </label>
-                  <label class="input-group">
+                  <label className="input-group">
                     <input
                       type="number"
                       placeholder="Reps"
-                      class="input input-bordered w-[250px]"
+                      className="input input-bordered w-[250px]"
                       onChange={(e) => setActualReps(e.target.value)}
                     />
                     <span>REPS</span>
@@ -183,15 +187,15 @@ console.log(completedWorkout, 'completedWorkout');
               </div>
 
               <div>
-                <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Choose weight</span>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Choose weight</span>
                   </label>
-                  <label class="input-group">
+                  <label className="input-group">
                     <input
                       type="number"
                       placeholder="Weight"
-                      class="input input-bordered w-[230px]"
+                      className="input input-bordered w-[230px]"
                       onChange={(e) => setActualWeight(e.target.value)}
                     />
                     <span>WEIGHT</span>
@@ -201,13 +205,13 @@ console.log(completedWorkout, 'completedWorkout');
                 <div className="flex justify-center gap-4">
                   <button
                     className="btn btn-outline btn-primary mt-8"
-                    onClick={() => {}}
+                    onClick={() => updateCompletedWorkoutupload()}
                   >
                     Add Exercise
                   </button>
                   <button
                     className="btn btn-outline btn-primary mt-8"
-                    onClick={() => uploadCompletedWorkoutupload()}
+                    onClick={() => createCompletedWorkoutupload()}
                   >
                     Complete Workout
                   </button>

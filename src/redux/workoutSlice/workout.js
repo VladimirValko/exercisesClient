@@ -35,13 +35,20 @@ export const addCompletedWorkout = createAsyncThunk('workout/addCompletedWorkout
     return data;
 });
 
+export const fetchCompleted = createAsyncThunk('workout/fetchCompleted', async (params) => {
+    const { data } = await axios.get("http://progress:4444/workouts", params);
+    return data;
+});
 
 
+// упражнение аккумулируется в стэйте
+// и потом просто готовое пушится на бэк уже из стэйта
+// нужно что бы после отправки стэйт с упражнениями очищался !!!
 
 const initialState = {
     myWorkouts: [],
-    completedWorkouts: [],
-    completedWorkout: [],
+    completedWorkouts: [], // тут будет фетч с сервера
+    completedWorkout: [], // тут будет аккумулироваться массив для отправки на бэк
     status: 'loading',
     postStatus: 'loading'
 }
@@ -53,6 +60,10 @@ const workoutSlice = createSlice({
         setWorkout: (state, action) => {
             state.myWorkouts.push(action.payload);
             console.log('workoutSlice added')
+        },
+        pushExercise: (state, action) => {
+            console.log(state.completedWorkout)
+            state.completedWorkout.push(action.payload);
         }
     },
     extraReducers: {
@@ -73,26 +84,26 @@ const workoutSlice = createSlice({
         },
         [addCompletedWorkout.fulfilled]: (state, action) => {
             state.postStatus = 'loaded';
-            state.completedWorkout = action.payload;
+            state.completedWorkout = ""
         }, 
         [addCompletedWorkout.rejected]: (state) => {
             state.postStatus = 'error';
         },
 
 
-        [updateWorkout.pending]: (state) => {
-            state.postStatus = 'loading';
+        [fetchCompleted.pending]: (state) => {
+            state.status = 'loading';
         },
-        [updateWorkout.fulfilled]: (state, action) => {
-            state.postStatus = 'loaded';
-            state.myWorkouts = action.payload;
+        [fetchCompleted.fulfilled]: (state, action) => {
+            state.completedWorkouts = action.payload;
+            state.status = 'loaded';
         }, 
-        [updateWorkout.rejected]: (state) => {
-            state.postStatus = 'error';
+        [fetchCompleted.rejected]: (state) => {
+            state.status = 'error';
         },
 
 }});
 
-export const { setWorkout } = workoutSlice.actions;
+export const { setWorkout, pushExercise } = workoutSlice.actions;
 
 export const worcoutReducer = workoutSlice.reducer
