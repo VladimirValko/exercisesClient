@@ -123,7 +123,7 @@ const Progress = () => {
 
     // ХЕРО БАНЕР
 
-    <div className="">
+    <div className="max-w-[1440px] mx-auto ">
       <div className="flex justify-center">
         <div
           className="hero h-[400px] shadow-xl mt-4 w-11/12 rounded-2xl"

@@ -20,12 +20,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className="">
+    <div className=" max-w-[1440px] mx-auto ">
       {/* МЕНЮ ДЛЯ МОБИЛКИ */}
 
       {isOpen && (
         <div className=" absolute ">
-          <div className=" relative z-10 left-0 top-0 bg-white w-screen h-[320px] shadow-lg text-3xl font-black flex flex-col justify-center items-center gap-6 text-gray-500"
+          <div className=" relative z-10 left-0 top-0 bg-white w-screen h-[320px] shadow-lg text-xl font-black flex flex-col justify-center items-center gap-6 text-gray-500"
           onClick={() => setOpen(!isOpen)}>
             
 

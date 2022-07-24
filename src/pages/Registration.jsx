@@ -36,7 +36,7 @@ export const Registration = () => {
   
   return (
 
-    <div class="hero min-h-screen bg-base ">
+    <div class="hero min-h-screen bg-base max-w-[1440px] mx-auto ">
       <div class="hero-content flex-col lg:flex-col">
         <div class="flex flex-col align-middle justify-center text-center lg:text-left max-w-[600px]">
           <h1 class="text-5xl font-bold text-gray-700 text-center">Sign Up</h1>

@@ -7,7 +7,7 @@ const Home = () => {
   const token = window.localStorage.getItem('token');
   
   return (
-    <div>
+    <div className="">
         <Hero />
         <Top />
         <Search />

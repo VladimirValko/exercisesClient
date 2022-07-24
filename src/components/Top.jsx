@@ -21,7 +21,7 @@ const Top = () => {
            
         </div>
        
-        <div className='flex w-screen flex-wrap gap-8 align-middle justify-center lg:pt-10'>
+        <div className='flex w-screen max-w-[1440px] flex-wrap gap-8 mx-auto  lg:pt-10'>
           <HorizontalScollbar />
         </div>
         <div className='flex align-middle items-center justify-center text-center gap-4 mt-2'>

@@ -85,7 +85,7 @@ const Search = () => {
 
         {/* РЕЗУЛЬТАТ ПОИСКА */}
 
-        <div className="flex flex-wrap gap-4 justify-center items-center">
+        <div className="flex max-w-[1440px] flex-wrap gap-4 justify-center items-center">
           {currentItems &&
             currentItems.map((exercise, i) => (
               <ExerciseCard

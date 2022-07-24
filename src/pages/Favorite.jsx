@@ -67,9 +67,9 @@ const Favorite = () => {
     return (
       // ХЕРО БАНЕР И СТАТИСТИКА
 
-      <div className=" ">
-        <div className="mt-8 lg:mt-0 hero w-screen text-center">
-          <div className="hero-content flex-col lg:flex-row-reverse">
+      <div className="max-w-[1440px] mx-auto ">
+        <div className="mt-8 lg:mt-0 hero w-screen 2xl:w-[1440px] text-center">
+          <div className="hero-content mx-auto items-center justify-center  flex-col lg:flex-row-reverse">
             <img
               src={Women}
               alt="women"
