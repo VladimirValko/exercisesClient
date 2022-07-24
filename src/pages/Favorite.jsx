@@ -68,47 +68,53 @@ const Favorite = () => {
       // ХЕРО БАНЕР И СТАТИСТИКА
 
       <div className=" ">
-        <div className="hero min-h-screen text-center">
+        <div className="mt-8 lg:mt-0 hero w-screen text-center">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <img
               src={Women}
               alt="women"
-              className="w-[500px] h-[700px] rounded-2xl shadow-lg ml-8"
+              className="hidden lg:flex lg:w-[500px] lg:h-[700px] rounded-2xl shadow-lg lg:ml-8"
             />
-            <div>
-              <h1 className="text-6xl font-extrabold text-gray-600">
+            <div className="flex flex-col items-center lg:w-1/2">
+              <h1 className=" justify-center lg:w-[500px] text-5xl lg:text-6xl font-extrabold text-gray-600 mb-4">
                 Create your own programs
               </h1>
-              <p className="py-6">
-
-                создать скелетоны под упражнения для главной страницы
-                <br />
-                создать анимацию загрузки для раздела фаворитс <br />
-              </p>
-              {/* <button className="btn btn-primary">Get Started</button> */}
+              <div className="mb-4 text-lg w-4/5">
+                  Find the most interesting exercises, add them to Your favorite and then, combine them in to Your own workouts! <br />
+                  On this page You can create and update Your workouts. <br />
+                  Also, Your favorite exercises are down below.
+              </div>
+              <div className=" flex justify-center">
               <Stat workouts={workouts} />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* ТАБЛИЦА ТРЕНИРОВОК */}
+        
 
         {workouts &&
           workouts.map((workout) => (
             <div>
-              <div className="mt-16 flex items-center justify-center gap-4  text-center pb-8 font-bold text-5xl text-gray-600">
+
+            {/* ЗАГОЛОВАОК ТРЕНИРОВКИ */}
+
+              <div className="mt-16 flex items-center justify-center gap-4  text-center pb-8 font-bold text-3xl lg:text-5xl text-gray-600">
                 <p>{workout.workoutName}</p>
-                <img src={Dumbbell} alt="dumbbell" className=" w-16" />
+                <img src={Dumbbell} alt="dumbbell" className="hidden lg:block w-16" />
               </div>
 
-              <div className="w-5/6 mx-auto shadow-md rounded-md">
+            {/* ТАБЛИЦА */}
+
+            <div className="flex justify-center lg:text-xl">
+            <div className="w-5/6 text-sm lg:w-5/6 shadow-md rounded-md">
                 <div className="overflow-x-auto capitalize">
-                  <table className="table w-full text-center">
+                  <table className="table-compact  md:table w-full text-center ">
                     <thead>
                       <tr>
-                        <th></th>
+                        <th ></th>
                         <th className="text-left">Name</th>
-                        <th>Target Muscle</th>
+                        <th className="xs:hidden">Target Muscle</th>
                         <th>Sets</th>
                         <th>Reps</th>
                       </tr>
@@ -123,7 +129,7 @@ const Favorite = () => {
                               <td className="text-left">
                                 {exercise.exerciseName}
                               </td>
-                              <td>{exercise.target}</td>
+                              <td className="xs:hidden">{exercise.target}</td>
                               <td>{exercise.goalSets}</td>
                               <td>{exercise.goalReps}</td>
                             </tr>
@@ -132,8 +138,12 @@ const Favorite = () => {
                   </table>
                 </div>
               </div>
+
+
             </div>
-          ))}
+
+            </div>
+          ))} 
 
         {/* ДОБАВЛЕНИЕ НОВОГО ПЛАНА ТРЕНИРОВКИ */}
 
@@ -154,14 +164,14 @@ const Favorite = () => {
 
         <div className="mt-24">
           <div className="flex justify-center">
-            <img className="w-[120px]"  src={Favorits} alt="exercises" />
+            <img className="w-[110px]"  src={Favorits} alt="exercises" />
           </div>
           <div>
-            <p className="text-center text-gray-600 font-extrabold text-6xl mt-8 ">
+            <p className="text-center text-gray-600 font-extrabold text-5xl lg:text-6xl mt-8 ">
               Your Favorite Exercises
             </p>
           </div>
-          <div className="flex flex-wrap gap-8 justify-center">
+          <div className="flex flex-wrap gap-6 justify-center">
             {exercises?.map((item, i) => (
               <div className="carousel-item">
                 <ExerciseCard

@@ -129,7 +129,7 @@ const Progress = () => {
           className="hero h-[400px] shadow-xl mt-4 w-11/12 rounded-2xl"
           style={{ backgroundImage: `url(${img})` }}
         >
-          <div className="hero-overlay bg-white bg-opacity-10"></div>
+          <div className="hero-overlay bg:gray-600 lg:bg-white bg-opacity-40 lg:bg-opacity-10"></div>
           <div className="hero-content text-center text-neutral-content">
             <div className="z-10">
               <h1 className="mb-5 z-10 text-6xl text-white font-extrabold">
@@ -153,7 +153,7 @@ const Progress = () => {
       {formShown ? (<div className="flex justify-center">
         <div className="mb-12 w-5/6">
           <div className="flex justify-center items-center text-center mt-20">
-            <div className="flex justify-center items-center gap-8">
+            <div className="flex lg:flex-row flex-col justify-center items-center gap-8">
               <div className="flex flex-col">
                 <div className="form-control w-[400px] max-w-xs">
                   <label className="label">
@@ -264,10 +264,10 @@ const Progress = () => {
         {completedWorkouts.length
           ? completedWorkouts.map((workout) => (
               <div className="mb-14">
-                <div className="mt-16 flex items-center justify-center gap-4  text-center pb-2 font-bold text-5xl text-gray-600">
+                <div className="mt-16 flex items-center justify-center gap-4  text-center pb-2 font-bold text-4xl lg:text-5xl text-gray-600">
                   <p>{workout.workoutName}</p>
                   
-                  <img src={Dumbbell} alt="dumbbell" className=" w-16" />
+                  <img src={Dumbbell} alt="dumbbell" className="hidden lg:block w-16" />
                   
                 </div>
                 <div className="flex justify-center text-center mb-6">
@@ -277,32 +277,30 @@ const Progress = () => {
                 </div>
                 
 
-                <div className="w-5/6 mx-auto shadow-md rounded-md ">
-                  <div className="overflow-x-auto capitalize">
-                    <table className="table w-full text-center">
-                      <thead>
+                <div className="lg:w-5/6 mx-0 w-full lg:mx-auto text-center shadow-md rounded-md ">
+                  <div className="overflow-x-auto ">
+                    <table className="table-compact lg:table  w-full text-center">
+                      <thead className="text-center">
                         <tr>
-                          <th></th>
-                          <th className="font-semibold">Name</th>
-                          <th className="text-gray-600 font-light">Goal Sets</th>
-                          <th>Actual Sets</th>
-                          <th className="text-gray-600 font-light">Goal Reps</th>
-                          <th>Actual Reps</th>
-                          <th className="text-gray-600 font-light">Goal Weight</th>
-                          <th>Actual Weight</th>
+                          <th className="font-semibold text-xs lg:text-sm">Name</th>
+                          <th className="text-gray-600 font-light text-xs lg:text-sm">Goal Sets</th>
+                          <th className="text-xs lg:text-sm">Actual Sets</th>
+                          <th className="text-gray-600 font-light text-xs lg:text-sm">Goal Reps</th>
+                          <th className="text-xs lg:text-sm">Actual Reps</th>
+                          <th className="text-gray-600 font-light text-xs lg:text-sm">Goal Weight</th>
+                          <th className="text-xs lg:text-sm">Actual Weight</th>
                         </tr>
                       </thead>
                       {workout.exercises.map((exercise, i) => (
-                        <tbody key={i}>
+                        <tbody key={i} className="text-center">
                           <tr>
-                            <th>{i + 1}</th>
-                            <td className="font-semibold">{exercise.currentexerciseName}</td>
-                            <td className="text-gray-600 font-light">{exercise.goalSets}</td>
-                            <td className="font-semibold">{exercise.actualSets}</td>
-                            <td className="text-gray-600 font-light">{exercise.goalReps}</td>
-                            <td className="font-semibold">{exercise.actualReps}</td>
-                            <td className="text-gray-600 font-light">{exercise.goalWeight}</td>
-                            <td className="font-semibold">{exercise.actualWeight}</td>
+                            <td className="font-semibold text-xs lg:text-sm">{exercise.currentexerciseName}</td>
+                            <td className="text-gray-600 font-light text-xs lg:text-sm">{exercise.goalSets}</td>
+                            <td className="font-semibold text-xs lg:text-sm">{exercise.actualSets}</td>
+                            <td className="text-gray-600 font-light text-xs lg:text-sm">{exercise.goalReps}</td>
+                            <td className="font-semibold text-xs lg:text-sm">{exercise.actualReps}</td>
+                            <td className="text-gray-600 font-light text-xs lg:text-sm">{exercise.goalWeight}</td>
+                            <td className="font-semibold text-xs lg:text-sm">{exercise.actualWeight}</td>
                           </tr>
                         </tbody>
                       ))}

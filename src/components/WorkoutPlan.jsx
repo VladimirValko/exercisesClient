@@ -99,7 +99,7 @@ const WorkoutPlan = ({ exercises }) => {
           {!isNew ? <p>Create New Workout</p> : <p>Update Workout</p>}
         </button>
       </div>
-      <div className="text-center text-gray-600 text-6xl font-bold mt-16 mb-8">
+      <div className="text-center text-gray-600 text-5xl lg:text-6xl font-bold mt-16 mb-8">
         Create Workout Plan
       </div>
       <div className="flex justify-center items-center text-center">
@@ -215,7 +215,7 @@ const WorkoutPlan = ({ exercises }) => {
 
           {exerciseImage && (
             <img
-              className="w-[480px] rounded-xl shadow-md"
+              className=" hidden lg:flex lg:w-[480px] rounded-xl shadow-md"
               src={exerciseImage}
               alt="exercise"
             />

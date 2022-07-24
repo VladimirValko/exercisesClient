@@ -40,11 +40,9 @@ const Login = () => {
     <div class="hero min-h-screen bg-base ">
       <div class="hero-content flex-col lg:flex-col">
         <div class="flex flex-col align-middle justify-center text-center lg:text-left max-w-[600px]">
-          <h1 class="text-5xl font-bold text-center">Log In</h1>
-          <p class="py-6 text-center">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+          <h1 class="text-5xl font-bold text-gray-700 text-center">Log In</h1>
+          <p class="py-6 text-center text-lg">
+            To have an ability to use all of the features, such as adding exercises to favorite and creating your own workout plan you should Log-In.
           </p>
         </div>
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

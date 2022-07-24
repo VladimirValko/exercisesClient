@@ -13,7 +13,7 @@ const Top = () => {
             </h2>
             
         </div>
-        <div className='flex align-middle justify-center text-center gap-4'>
+        <div className='flex  flex-col lg:flex-row align-middle justify-center items-center text-center gap-4 m-4'>
             <p className='text-center text-gray-700 italic text-xl mt-4'>
                 <span className='text-primary'>Not shure where to start? </span>Try out most popular exercises!
             </p>
@@ -21,7 +21,7 @@ const Top = () => {
            
         </div>
        
-        <div className='flex w-screen flex-wrap gap-8 align-middle justify-center pt-10'>
+        <div className='flex w-screen flex-wrap gap-8 align-middle justify-center lg:pt-10'>
           <HorizontalScollbar />
         </div>
         <div className='flex align-middle items-center justify-center text-center gap-4 mt-2'>

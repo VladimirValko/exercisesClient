@@ -57,27 +57,27 @@ const Search = () => {
   };
 
   return (
-
     // ПОИСК
-    
+
     <div>
-      <div className=" w-screen flex flex-col justify-center items-center text-center mt-32">
-        <h2 className="text-4xl font-black w-[600px] text-primary">
-          We have more than 1200 exercises Find your favorite one !
+      <div className=" w-screen flex flex-col justify-center items-center text-center lg:mt-32 mt-12">
+        <h2 className="text-4xl font-black lg:w-[600px] text-primary m-4">
+          We have more than 1200 exercises
+          <br /> Find your favorite one !
         </h2>
-        <div className="flex gap-2 items-center justify-center mb-24 mt-12">
+        <div className="flex flex-col gap-8 lg:flex-row  lg:gap-2 items-center justify-center lg:mb-24 mt-12">
           <input
             id="search"
             type="text"
             placeholder="Search for your favorite exercises"
-            className="input input-bordered input-secondary w-[900px] shadow-md"
+            className="input input-bordered input-secondary w-screen p-4 lg:w-[900px] shadow-md"
             onChange={(e) => {
               setSearch(e.target.value.toLocaleLowerCase());
             }}
           />
           <button
             onClick={() => handleSearch()}
-            class="btn btn-outline btn-primary shadow-sm"
+            class="btn btn-outline btn-primary shadow-sm mb-8 lg:mb-0"
           >
             Search
           </button>
@@ -100,7 +100,7 @@ const Search = () => {
 
       {/* ПАГИНАЦИЯ */}
 
-      <div className=" flex justify-center">
+      <div className=" flex justify-center ">
         <Link
           activeClass="active"
           to="search"
@@ -111,13 +111,15 @@ const Search = () => {
         >
           <ReactPaginate
             breakLabel="..."
-            nextLabel="next >"
+            nextLabel=">"
             onPageChange={handlePageClick}
             pageRangeDisplayed={3}
             pageCount={pageCount}
-            previousLabel="< previous"
+            previousLabel="<"
             renderOnZeroPageCount={null}
-            className="flex gap-6 mt-10 mb-24 font-bold text-center text-xl capitalize"
+            className="flex lg:flex-row w-[300px] gap-4
+            lg:max-w-[800px] items-center justify-center  lg:gap-6 mt-10 mb-24 
+            font-bold text-center text-xl capitalize"
           />
         </Link>
       </div>

@@ -39,11 +39,9 @@ export const Registration = () => {
     <div class="hero min-h-screen bg-base ">
       <div class="hero-content flex-col lg:flex-col">
         <div class="flex flex-col align-middle justify-center text-center lg:text-left max-w-[600px]">
-          <h1 class="text-5xl font-bold text-center">Sing Up</h1>
-          <p class="py-6 text-center">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+          <h1 class="text-5xl font-bold text-gray-700 text-center">Sign Up</h1>
+          <p class="py-6 text-center text-xl">
+            Don't have an account yet? Sign up using your Name and E-mail.
           </p>
         </div>
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
